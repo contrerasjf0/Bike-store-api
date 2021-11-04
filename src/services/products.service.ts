@@ -24,7 +24,7 @@ export class ProductsService {
     return this.products.find((item) => item.id === id);
   }
 
-  create(payload: any) {
+  create(payload: Product) {
     this.counterId = this.counterId + 1;
     const newProduct = {
       id: this.counterId,
@@ -32,5 +32,27 @@ export class ProductsService {
     };
     this.products.push(newProduct);
     return newProduct;
+  }
+
+  update(id: number, payload: Product){
+    const index = this.products.findIndex((item) => item.id === id)
+    const product = this.findOne(id)
+
+    const productChanges = {
+      ...product,
+      ...payload,
+    }
+
+    this.products.splice(index, 1, productChanges)
+
+    return productChanges
+  }
+
+  delete(id: number){
+    const index = this.products.findIndex((item) => item.id === id)
+    const product = this.findOne(id)
+    this.products.splice(index, 1)
+
+    return product
   }
 }
