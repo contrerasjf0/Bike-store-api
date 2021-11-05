@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { CreateProductDto, UpdateProductDto} from './../dtos/products.dtos'
 import { Product } from './../entities/product.entity';
 
 @Injectable()
@@ -28,7 +29,7 @@ export class ProductsService {
     return product;
   }
 
-  create(payload: Product) {
+  create(payload: CreateProductDto) {
     this.counterId = this.counterId + 1;
     const newProduct = {
       id: this.counterId,
@@ -38,7 +39,7 @@ export class ProductsService {
     return newProduct;
   }
 
-  update(id: number, payload: Product){
+  update(id: number, payload: UpdateProductDto){
     const index = this.products.findIndex((item) => item.id === id)
     const product = this.findOne(id)
 
