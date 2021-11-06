@@ -18,7 +18,7 @@ export class UsersService {
     },
   ];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, @Inject('API_KEY') private apiKey: string) {}
 
   findAll() {
     return this.users;
