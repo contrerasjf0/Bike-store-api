@@ -1,5 +1,7 @@
-// src/app.module.ts
 import { Module, HttpModule, HttpService } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -10,7 +12,15 @@ const API_KEY = '12345634';
 const API_KEY_PROD = 'PROD1212121SA';
 
 @Module({
-  imports: [HttpModule, UsersModule, ProductsModule, DatabaseModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+    HttpModule,
+    UsersModule,
+    ProductsModule,
+    DatabaseModule],
   controllers: [AppController],
   providers: [
     AppService,
