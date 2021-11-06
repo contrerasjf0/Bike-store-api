@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from '../entities/user.entity';
+import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
+import { ProductsService } from './../../products/services/products.service';
+
 
 @Injectable()
 export class UsersService {
@@ -14,6 +17,8 @@ export class UsersService {
       role: 'admin',
     },
   ];
+
+  constructor(private productsService: ProductsService) {}
 
   findAll() {
     return this.users;
@@ -35,6 +40,15 @@ export class UsersService {
     };
     this.users.push(newUser);
     return newUser;
+  }
+
+  getOrderByUser(id: number): Order {
+    const user = this.findOne(id);
+    return {
+      date: new Date(),
+      user,
+      products: this.productsService.findAll(),
+    };
   }
 
   update(id: number, changes: UpdateUserDto) {
