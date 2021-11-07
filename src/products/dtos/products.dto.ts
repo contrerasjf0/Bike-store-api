@@ -8,6 +8,7 @@ import {
   IsPositive,
 } from 'class-validator';
 
+
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
