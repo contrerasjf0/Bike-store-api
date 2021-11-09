@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { ConfigService, ConfigType } from '@nestjs/config'; 
+import { ConfigType } from '@nestjs/config'; 
+import { Client } from 'pg';
 
 import config from './config';
 
@@ -7,7 +8,7 @@ import config from './config';
 export class AppService {
   
   constructor(
-    @Inject('TASKS') private tasks: any[],
+    @Inject('DBClient') private DBClient: Client,
     @Inject(config.KEY) private configService: ConfigType<typeof config>) {}
 
   getHello(): string {
@@ -15,4 +16,16 @@ export class AppService {
     const name = this.configService.database.name;
     return `Hello World! ${apiKey} ${name}`;
   }
+
+  getTasks() {
+    return new Promise((resolve, reject) => {
+      this.DBClient.query('SELECT * FROM tasks', (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res.rows);
+      });
+    });
+  }
 }
+
