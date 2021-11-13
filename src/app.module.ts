@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 import { enviroments } from './enviroments';
+import { AuthModule } from './auth/auth.module';
 import config from './config';
 
 const API_KEY = '12345634';
@@ -28,7 +29,8 @@ const API_KEY_PROD = 'PROD1212121SA';
     HttpModule,
     UsersModule,
     ProductsModule,
-    DatabaseModule],
+    DatabaseModule,
+    AuthModule],
   controllers: [AppController],
   providers: [
     AppService,
