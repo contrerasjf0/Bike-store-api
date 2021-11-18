@@ -21,7 +21,7 @@ const API_KEY_PROD = 'PROD1212121SA';
       load: [config],
       isGlobal: true,
       validationSchema: Joi.object({ // 👈
-        API_KEY: Joi.number().required(),
+        API_KEY: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
         DATABASE_PORT: Joi.number().required(),
       }),
