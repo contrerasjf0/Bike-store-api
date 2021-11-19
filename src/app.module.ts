@@ -20,8 +20,9 @@ const API_KEY_PROD = 'PROD1212121SA';
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       load: [config],
       isGlobal: true,
-      validationSchema: Joi.object({ // 👈
+      validationSchema: Joi.object({
         API_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
         DATABASE_PORT: Joi.number().required(),
       }),
