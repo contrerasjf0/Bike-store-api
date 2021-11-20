@@ -28,13 +28,12 @@ client.connect();
       const { user, host, dbName, password, port } = configService.postgres;
       return {
         type: 'postgres',
-        host,
-        port,
-        username: user,
-        password,
-        database: dbName,
+        url: configService.postgresUrl,
         synchronize: false,
         autoLoadEntities: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       };
     },
   }),
@@ -49,11 +48,10 @@ client.connect();
       useFactory: (configService: ConfigType<typeof config>) => {
         const { user, host, dbName, password, port } = configService.database.postgres;
         const client = new Client({
-          user,
-          host,
-          database: dbName,
-          password,
-          port,
+          connectionString: configService.postgresUrl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         });
         client.connect();
         return client;
