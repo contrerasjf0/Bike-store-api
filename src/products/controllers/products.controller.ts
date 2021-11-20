@@ -18,9 +18,14 @@ import { CreateProductDto, UpdateProductDto, FilterProductsDto } from '../dtos/p
 import { ParseIntPipe } from '../../common/parse-int.pipe'
 import { ProductsService } from './../services/products.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Public } from '../../auth/decorators/public.decorator';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { Role } from '../../auth/models/roles.model';
 
-@UseGuards(JwtAuthGuard)
+
+
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
@@ -47,6 +52,7 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @Roles(Role.ADMIN)
   @Post()
   create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
